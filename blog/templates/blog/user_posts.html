@@ -2,9 +2,17 @@
 <!-- USER POSTS PAGE -->
 {% extends "blog/base.html" %} <!-- use base.html template -->
 {% block content%}
-	<h1 class="mb-3"> Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count}})</h1>
+	<h2 class="increase"> Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count}})</h2>
 	{% for p in posts %}
 	<!-- HTML AND CSS for BLOG POSTS -->
+		<style>
+			h2.increase
+			{
+				font-size: 18px;
+				font-weight: bold;
+				font-family: cursive;
+			}
+		</style>
 		<article class="media content-section">
 			<img class="rounded-circle article-img" src="{{ p.author.profile.image.url }}">
 		  <div class="media-body">
@@ -12,7 +20,9 @@
 		      <a class="mr-2" href="{% url 'user-posts' p.author.username %}">{{ p.author }}</a>
 		      <small class="text-muted">{{ p.date|date:"M d, Y @P" }}</small>
 		    </div>
-		    <h2><a class="article-title" href="{% url 'post-detail' p.id %}">{{ p.title }}</a></h2>
+		    <h2 class="increase">
+		    	<a class="article-title" href="{% url 'post-detail' p.id %}">{{ p.title }}</a>
+		    </h2>
 		    <p class="article-content">{{ p.content }}</p>
 		  </div>
 		</article>
