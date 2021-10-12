@@ -2,7 +2,7 @@
 <!-- USER POSTS PAGE -->
 {% extends "blog/base.html" %} <!-- use base.html template -->
 {% block content%}
-	<h2 class="increase"> Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count}})</h2>
+	<h2 class="increase text-white"> Posts by @{{ view.kwargs.username }} <h5 class="text-success">#{{ page_obj.paginator.count}}</h2></h2>
 	{% for p in posts %}
 	<!-- HTML AND CSS for BLOG POSTS -->
 		<style>
@@ -10,20 +10,20 @@
 			{
 				font-size: 18px;
 				font-weight: bold;
-				font-family: cursive;
+				font-family: monospace;
 			}
 		</style>
-		<article class="media content-section">
+		<article class="media content-section bg-secondary">
 			<img class="rounded-circle article-img" src="{{ p.author.profile.image.url }}">
 		  <div class="media-body">
 		    <div class="article-metadata">
-		      <a class="mr-2" href="{% url 'user-posts' p.author.username %}">{{ p.author }}</a>
+		      <a class="mr-2 text-success font-italic" href="{% url 'user-posts' p.author.username %}">@{{ p.author }}</a>
 		      <small class="text-muted">{{ p.date|date:"M d, Y @P" }}</small>
 		    </div>
 		    <h2 class="increase">
-		    	<a class="article-title" href="{% url 'post-detail' p.id %}">{{ p.title }}</a>
+		    	<a class="article-title text-dark font-italic" href="{% url 'post-detail' p.id %}"><u>{{ p.title }}</u></a>
 		    </h2>
-		    <p class="article-content">{{ p.content }}</p>
+		    <p class="article-content text-white">{{ p.content|slice:":50" }}</p>
 		  </div>
 		</article>
 	<!--- HTML AND CSS for BLOG POSTS --->

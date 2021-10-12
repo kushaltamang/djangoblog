@@ -6,28 +6,44 @@
 			{
 				font-size: 18px;
 				font-weight: bold;
-				font-family: cursive;
+				font-family: monospace;
 			}
-		</style>
-	<article class="media content-section">
+	</style>
+
+	<article class="media content-section bg-secondary text-white">
 		<img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
 		<div class="media-body">
 			<div class="article-metadata">
-				<a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+				<a class="mr-2 text-success" href="{% url 'user-posts' object.author.username %}">@{{ object.author }}</a>
 		      	<small class="text-muted">{{ object.date|date:"M d, Y @P" }}</small>
 		      	{% if object.author == user %}
 		      		<div>
-		      			<a class = "btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}"> Update </a>
+		      			<a class = "btn btn-success btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}"> Update</a>
 		      			<a class = "btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}"> Delete </a>
 		      		</div>
 		      		
 		      	{% endif %}
 		</div>
 				<h2 class= "increase">
-					<a class="article-title">{{ object.title }}</a>
+					<a class="article-title font-italic text-dark">{{ object.title }}</a>
 				</h2>
-		    	<p class="article-content">{{ object.content }}</p>
+		    	<p class="article-content text-white">{{ object.content|safe }}</p> <!-- safe lets us add html code to our content -->
 		  	</div>
 	</article>
+
+	<!-- LIKES -->
+{% if user.is_authenticated %}
+  <form action="{% url 'post_like' object.id %}" method="POST">
+	{% csrf_token %}
+
+	{% if post_is_liked %}
+	<button type="submit" name="post_id" value="{{object.id}}" class=" btn btn-outline-danger float-left">Unlike</button>
+	{% else %}
+	<button type="submit" name="post_id" value="{{object.id}}" class=" btn btn-outline-success float-left">Like</button>
+	{% endif %}
+  </form>
+{% else %}
+  <a class="text-muted" href="{% url 'login' %}?next={{request.path}}">Log In to like this content</a><br>
+{% endif %}
 	<!--- HTML AND CSS for BLOG POSTS --->
 {% endblock content%}

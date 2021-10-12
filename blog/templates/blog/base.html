@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 	<!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,20 +11,22 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
 	{% if title %}
-		<title>Django Blog - {{title}}</title>
+		<title>ktmgblog - {{title}}</title>
 	{% else %}
-		<title>Django Blog </title>
+		<title>ktmgblog</title>
 	{% endif %}
+
 </head>
-<body>
+
+<body class="bg-dark">
 	<!-- ************** NAVBAR ***************** --> 
 	<header class="site-header">
-	  	<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+	  	<nav class="navbar navbar-expand-md navbar-dark fixed-top border-bottom border-white">
 	    <div class="container">
-	      <a class="navbar-brand mr-4" href="{% url 'blog-homepage' %}">Django Blog</a>
+	      <a class="navbar-brand mr-4 text-success" href="{% url 'blog-homepage' %}">ktmgblog</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
 	      </button>
@@ -50,7 +53,7 @@
 	<!-- ************** NAVBAR ***************** -->
 
 		<!-- *********** MAIN SECTION ********* -->
-	<main role="main" class="container">
+	<main role="main" class="container bg-dark">
 	  <div class="row">
 	    <div class="col-md-8">
 	    	{% if messages %}
@@ -60,27 +63,26 @@
 	    			</div>
 	    		{% endfor %}
 	    	{% endif %}
-	      {% block content %}
+	      {% block content %} <!-- base template is the parent, child templates(home.html, post_detail.html) can overwrite these blocks to create their own view-->
 	      {% endblock %}
 	    </div>
-	    <div class="col-md-4">
-	    	     	<!--  SIDEBAR ---
-	      <div class="content-section">
-	        <h3>Our Sidebar</h3>
-	        <p class='text-muted'>You can put any information here you'd like.
-	          <ul class="list-group">
-	            <li class="list-group-item list-group-item-light">Latest Posts</li>
-	            <li class="list-group-item list-group-item-light">Announcements</li>
-	            <li class="list-group-item list-group-item-light">Calendars</li>
-	            <li class="list-group-item list-group-item-light">etc</li>
+    	 
+    	 {% if request.path == "/" %}	<!-- to display sidebar only in home page --> 	
+	    <div class="col-md-4 bg-dark">
+	      <div class="content-section bg-dark ">
+	        <h3 class='text-white'>Rhymes like Dimes</h3>
+	          <ul class="list-group ">
+	            <li class="list-group-item  bg-dark text-white border-bottom border-white"><h6 class="text-success">#1</h6>Average emcee is like a TV Blooper, MF DOOM he's like DB Cooper.</li>
+	            <li class="list-group-item list-group-item-light bg-dark text-white border border-white"><h6 class="text-success">#2</h6>Living off borrowed time the clock ticks faster, that would be the hour they knock the sick blaster.</li>
+	            <li class="list-group-item list-group-item-light bg-dark text-white border border-white"><h6 class="text-success">#3</h6>What is Jalapenos? Get it like a whuppin' when you holla at your seniors.</li>
 	          </ul>
-	        </p>
-	      </div>
-	      				--- SIDEBAR ----->
+	      </div> 				
 	    </div>
+	    {% endif %}
+
 	  </div>
 	</main>
-			<! *********** MAIN SECTION *********>
+			<!--- *********** MAIN SECTION *********>
 
 	 <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

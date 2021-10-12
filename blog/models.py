@@ -10,6 +10,7 @@ class Post(models.Model):
 	content = models.TextField()
 	date = models.DateTimeField(default=timezone.now) # data when the object/post is created
 	author = models.ForeignKey(User, on_delete=models.CASCADE) # if user deleted, delete the post as well
+	likes = models.ManyToManyField(User, related_name='post_like')
 
 	# decides what we want to be printed out in the Django Shell as the results of Post query 
 	def __str__(self):
@@ -18,4 +19,8 @@ class Post(models.Model):
 	# returns path to post-detail-route as string, when a post is created	
 	def get_absolute_url(self):
 		return reverse('post-detail', kwargs={'pk': self.pk})
+
+	def num_of_likes(self):
+		return self.likes.count()
+
 

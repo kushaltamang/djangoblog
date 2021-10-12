@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views # import views from current directory
-from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView, BlogPostLike
 
 # when user goes to home path, show views.home
 urlpatterns = 	[
@@ -11,5 +11,6 @@ urlpatterns = 	[
 				path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'), # route with integer ID of post to update a post
 				path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'), # route with integer ID of post to delete a post, template: <model>/<form>.html
 			    path('about/', views.about, name='blog-about'), # when user goes to /blog/about, because 'blog' is the homepage
+			    path('like/<int:pk>', views.BlogPostLike, name='post_like'),
 				] 
 

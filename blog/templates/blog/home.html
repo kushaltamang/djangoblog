@@ -7,20 +7,27 @@
 			{
 				font-size: 18px;
 				font-weight: bold;
-				font-family: cursive;
+				font-family: monospace;
 			}
 		</style>
-		<article class="media content-section">
+
+		<h4 name="post_id", value="{{p.id}}" class="text-danger font-weight-light float-left mr-2">♡<br> {{p.like_count}}</br>
+		</h4>
+
+		<article class="media content-section bg-secondary text-white">
 			<img class="rounded-circle article-img" src="{{ p.author.profile.image.url }}">
-		  <div class="media-body">
+		  <div class="media-body pull-right">
 		    <div class="article-metadata">
-		      <a class="mr-2" href="{% url 'user-posts' p.author.username %}">{{ p.author }}</a>
-		      <small class="text-muted">{{ p.date|date:"M d, Y @P" }}</small>
+		      	<a class="mr-2 text-success font-italic" href="{% url 'user-posts' p.author.username %}">@{{ p.author }}
+		      	</a>
+		      	<small class="text-white font-italic font-weight-light">
+		      	{{ p.date|date:"M d, Y P" }} 
+		  	   	</small>
 		    </div>
 		    <h2 class="increase">
-		    	<a class="article-title" href="{% url 'post-detail' p.id %}">{{ p.title }}</a>
+		    	<a class="article-title font-italic text-dark" href="{% url 'post-detail' p.id %}"><u>{{ p.title }}</u></a>
 		    </h2>
-		    <p class="article-content">{{ p.content }}</p>
+		    <p class="article-content">{{ p.content|slice:":50" }}...</p>
 		  </div>
 		</article>
 	<!--- HTML AND CSS for BLOG POSTS --->
@@ -29,22 +36,24 @@
 	<!-- pagination logic -->
 	{% if is_paginated %}
 		{% if page_obj.has_previous %}
-			<a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-			<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+			<a class="btn btn-outline-success mb-4" href="?page=1">First</a>
+			<a class="btn btn-outline-success mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
 		{% endif %}
 
 		{% for num in page_obj.paginator.page_range %}
 			{% if page_obj.number == num %}
-				<a class="btn btn-info mb-4" href="?page={{ num }}">{{num}}</a>
+				<a class="btn btn-success mb-4" href="?page={{ num }}">{{num}}</a>
 			{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-				<a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{num}}</a>
+				<a class="btn btn-outline-success mb-4" href="?page={{ num }}">{{num}}</a>
 			{% endif %}
 		{% endfor %}
 
 		{% if page_obj.has_next %}
-			<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-			<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+			<a class="btn btn-outline-success mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+			<a class="btn btn-outline-success mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
 		{% endif %}
 
 	{% endif %}
 {% endblock content%}
+
+
